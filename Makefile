@@ -10,17 +10,21 @@ OBJS	= $(SRC:.c=.o)
 
 LIBFT	= libft/libft.a
 
+BREW_PREFIX = $(shell brew --prefix glfw)
 
 MLX42_INC = $(HOME)/.local/include
 MLX42_LIB = $(HOME)/.local/lib
+GLFW_INC  = $(BREW_PREFIX)/include
+GLFW_LIB  = $(BREW_PREFIX)/lib
 
-FLAGMLX = -I$(MLX42_INC) -L$(MLX42_LIB) -lmlx42 -lglfw \
-          -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -framework CoreFoundation
-
+FLAGMLX = -I$(MLX42_INC) -I$(GLFW_INC) \
+          -L$(MLX42_LIB) -L$(GLFW_LIB) \
+          -lmlx42 -lglfw \
+          -framework OpenGL -framework Cocoa -framework IOKit 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@	echo "\033[1;32m  🛤  Building cub3D with MLX42... 🔮     \033[0m"
+	@	echo "\033[1;32m  🛤  Building cub3D ... 🔮     \033[0m"
 	@	make -C libft
 	@	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FLAGMLX) -o $(NAME)
 
