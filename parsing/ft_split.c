@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yazlaigi <yazlaigi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 12:21:15 by yazlaigi          #+#    #+#             */
-/*   Updated: 2024/11/04 13:08:00 by yazlaigi         ###   ########.fr       */
+/*   Updated: 2025/09/17 09:29:47 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "/Users/yasserlotfi/studies/cursus/Cub3D/cub3d.h"
 
 static int	count_words(const char *s, char c)
 {

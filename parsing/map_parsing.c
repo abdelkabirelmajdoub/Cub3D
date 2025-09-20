@@ -6,17 +6,17 @@
 /*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:09:09 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/09/10 12:16:01 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/09/18 09:28:20 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "/Users/yasserlotfi/studies/cursus/Cub3D/cub3d.h"
 
-int count_chars(char *map_name)
+int	count_chars(char *map_name)
 {
 	int		fd;
 	int		char_num;
-	int 	byte_read;
+	int		byte_read;
 	char	buffer[1024];
 
 	fd = open (map_name, O_RDONLY);
@@ -44,7 +44,7 @@ int	count_line(char *map_name)
 	i = 0;
 	x = 1;
 	fd = open (map_name, O_RDONLY);
-	buffer = malloc (count_chars(map_name));
+	buffer = malloc (count_chars(map_name) + 1);
 	if (!buffer)
 		return (0);
 	byte_read = read(fd, buffer, count_chars(map_name));
@@ -62,13 +62,42 @@ int	count_line(char *map_name)
 	return (close (fd), x);
 }
 
-// char	**convert_map(char **map)
-// {
-	
-// }
-
-int main ()
+char	**convert_map(char *map_name)
 {
+	int		i;
+	int		j;
+	char	*line;
+	int		fd;
+	char	**array;
 
-	printf("%d\n",count_line("map.cub"));
+	array = malloc (count_line(map_name) * sizeof(char *));
+	if (!array)
+		return (NULL);
+	i = 0;
+	j = 0;
+	fd = open (map_name, O_RDONLY);
+	while (j <= 8)
+	{
+		line = get_next_line(fd);
+		if (line != NULL)
+			free(line);
+		j++;
+	}
+	while (i < count_line(map_name))
+	{
+		array[i] = get_next_line(fd);
+		i++;
+	}
+	return (array);
+}
+
+int	map_pars(char **map, int map_lines, t_player *player_pos)
+{
+	if (surrounded_bywalls(map, map_lines) != 1
+		|| player_check(map, map_lines) != 1
+		|| map_content(map, map_lines) != 1
+		|| space_check(map, map_lines) != 1)
+		return (0);
+	get_playerpos(map, map_lines, player_pos);
+	return (1);
 }

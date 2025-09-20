@@ -1,30 +1,35 @@
-
 NAME	= cub3D
 
-CC		= cc 
+CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
-SRC		= main.c
+SRC		= main.c parsing/get_next_line_utils.c parsing/get_next_line.c parsing/map_parsing.c parsing/map_pars.c parsing/texture_pars.c\
+			parsing/ft_split.c
 
-LIBFT	= libft/libft.a
-MLX		= mlx/libmlx.a
-FLAGMLX = -framework OpenGL -framework AppKit
+
 OBJS	= $(SRC:.c=.o)
 
-all:$(NAME)
+LIBFT	= libft/libft.a
 
-$(NAME):$(OBJS)
-	@	echo "\033[1;32m  🛤  Building cub3D... 🔮     \033[0m"
+
+MLX42_INC = $(HOME)/.local/include
+MLX42_LIB = $(HOME)/.local/lib
+
+FLAGMLX = -I$(MLX42_INC) -L$(MLX42_LIB) -lmlx42 -lglfw \
+          -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -framework CoreFoundation
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	@	echo "\033[1;32m  🛤  Building cub3D with MLX42... 🔮     \033[0m"
 	@	make -C libft
-	@	make -C mlx
-		$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(FLAGMLX) -o $(NAME)
+	@	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FLAGMLX) -o $(NAME)
 
-%.o:%.c 
-	@	$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.c
+	@	$(CC) $(CFLAGS) -c $< -I$(MLX42_INC) -o $@
 
 clean:
 	@	make clean -C libft
-	@	make clean -C mlx
 	@	rm -f $(OBJS)
 
 fclean: clean
