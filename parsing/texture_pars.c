@@ -6,7 +6,7 @@
 /*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 11:56:16 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/09/18 09:31:08 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/09/29 11:01:25 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ char	*trim_newline(char *str)
 	return (new_str);
 }
 
-void	get_paths(t_textures *paths, int fd)
+void	get_paths(t_textures *paths, int fd, int line)
 {
 	int			i;
 	int			j;
 	char		*value;
 
 	i = 0;
-	while (i < 8)
+	while (i < line)
 	{
 		j = 0;
 		value = get_next_line(fd);
@@ -57,6 +57,7 @@ void	get_paths(t_textures *paths, int fd)
 			paths->floor_color = trim_newline(&value[2]);
 		else if (value[j] == 'C')
 			paths->ceiling_color = trim_newline(&value[2]);
+		free (value);
 		i++;
 	}
 }

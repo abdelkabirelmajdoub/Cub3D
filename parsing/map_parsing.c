@@ -6,7 +6,7 @@
 /*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:09:09 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/09/18 09:28:20 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/09/30 10:32:47 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,36 @@ int	count_line(char *map_name)
 	return (close (fd), x);
 }
 
-char	**convert_map(char *map_name)
+int map_start(char *map_name)
+{
+	int fd;
+	int line_num;
+	char *line;
+	int j;
+
+	fd = open(map_name, O_RDONLY);
+	if (fd < 0)
+		return -1;
+	line_num = 0;
+	while ((line = get_next_line(fd)))
+	{
+		j = 0;
+		while (line[j] == ' ' || (line[j] >= 9 && line[j] <= 13))
+			j++;
+		if (line[j] == '1' || line[j] == '0')
+		{
+			free(line);
+			close(fd);
+			return line_num;
+		}
+		free(line);
+		line_num++;
+	}
+	close(fd);
+	return -1;
+}
+
+char	**convert_map(char *map_name, int start)
 {
 	int		i;
 	int		j;
@@ -76,7 +105,7 @@ char	**convert_map(char *map_name)
 	i = 0;
 	j = 0;
 	fd = open (map_name, O_RDONLY);
-	while (j <= 8)
+	while (j < start + 1)
 	{
 		line = get_next_line(fd);
 		if (line != NULL)

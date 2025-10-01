@@ -6,7 +6,7 @@
 /*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:39:30 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/09/18 09:28:40 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/09/30 10:36:56 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	map_content(char **map, int line)
 	while (i < line)
 	{
 		j = 0;
+		if (map[i][0] == '\n' || map[i][0] == '\0')
+			return (0);
 		while (map[i][j] != '\0' && map[i][j] != '\n')
 		{
 			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' '
@@ -74,13 +76,11 @@ int	space_check(char **map, int line)
 	while (i < line)
 	{
 		j = 0;
-		while (map[i][j] && map[i][j] != '\n')
+		while (map[i][j] && map[i][j] != '\0')
 		{
 			if (map[i][j] == ' ')
 			{
 				if (i > 0 && map[i - 1][j] != '1' && map[i - 1][j] != ' ' && map[i - 1][j] != '\0')
-					return (0);
-				if (i < line - 1 && map[i + 1][j] != '1' && map[i + 1][j] != ' ' && map[i + 1][j] != '\0')
 					return (0);
 				if (j > 0 && map[i][j - 1] != '1' && map[i][j - 1] != ' ')
 					return (0);
@@ -96,28 +96,29 @@ int	space_check(char **map, int line)
 
 int	surrounded_bywalls(char **map, int line)
 {
-	static int	i;
+	int	i;
+	int	j;
 
-	while (map[0][i] != '\n')
-	{
-		if (map[0][i] != '1')
-			return (0);
-		i++;
-	}
-	i = 0;
-	while (map[line - 1][i] != '\0')
-	{
-		if (map[line - 1][i] != '1')
-			return (0);
-		i++;
-	}
 	i = 0;
 	while (i < line)
 	{
-		if (map[i][0] != '1' || map[i][ft_strlen(map[i]) - 2] != '1')
-			return (0);
-		if (ft_strlen(map[i]) == 0)
-			return (0);
+		j = 0;
+		while (map[i][j] && map[i][j] != '\n')
+		{
+			if (map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S'
+				|| map[i][j] == 'E' || map[i][j] == 'W')
+			{
+				if ((i > 0 &&  map[i - 1][j] == ' '))
+					return (0);
+				if (i == line - 1 || map[i + 1][j] == ' ' || map[i + 1][j] == '\0')
+					return (0);
+				if (j == 0 || map[i][j - 1] == ' ')
+					return (0);
+				if (map[i][j + 1] == ' ' || map[i][j + 1] == '\0')
+					return (0);
+			}
+			j++;
+		}
 		i++;
 	}
 	return (1);

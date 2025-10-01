@@ -6,7 +6,7 @@
 /*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:11 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/09/11 10:09:56 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/09/29 08:59:26 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ char	*before_newline(char *str)
 		n_str[i] = str[i];
 		i++;
 	}
-	if (str[i] == '\n')
-		n_str[i++] = '\n';
+	// if (str[i] == '\n')
+	// 	n_str[i++] = '\n';
 	n_str[i] = '\0';
 	return (n_str);
 }

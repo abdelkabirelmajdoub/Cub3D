@@ -6,7 +6,7 @@
 /*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/09/20 10:33:13 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/09/29 12:18:26 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #   define BUFFER_SIZE 45
 #  endif
 #  ifndef TILE_SIZE
-#   define TILE_SIZE 64
+#   define TILE_SIZE 32
 #  endif
 
 char	*get_next_line(int fd);
@@ -57,7 +57,8 @@ typedef struct s_textures
 	char	*ceiling_color;
 }	t_textures;
 
-char	**convert_map(char *map_name);
+char	**convert_map(char *map_name, int start);
+int		map_start(char *map_name);
 int		count_chars(char *map_name);
 int		count_line(char *map_name);
 int		surrounded_bywalls(char **map, int line);
@@ -66,7 +67,7 @@ int		map_content(char **map, int line);
 int		space_check(char **map, int line);
 void	get_playerpos(char **map, int line, t_player	*player_pos);
 int		map_pars(char **map, int map_lines, t_player *player_pos);
-void	get_paths(t_textures *paths, int fd);
+void	get_paths(t_textures *paths, int fd, int line);
 int		main_helper(char *map_name);
 char	**ft_split(char const *s, char c);
 int		validate_color(char *str);
