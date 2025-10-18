@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:39:30 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/10/12 12:20:17 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:00:30 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	surrounded_bywalls(char **map, int line)
 					return (0);
 				if (i == line - 1 || map[i + 1][j] == ' ' || map[i + 1][j] == '\0')
 					return (0);
-				if (j == 0 || map[i][j - 1] == ' ')
+				if (j == 0 || map[i][j - 1] == ' ' || i == 0)
 					return (0);
 				if (map[i][j + 1] == ' ' || map[i][j + 1] == '\0')
 					return (0);

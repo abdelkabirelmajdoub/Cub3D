@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:09:09 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/10/12 11:53:22 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:00:19 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	**convert_map(char *map_name, int start)
 	i = 0;
 	j = 0;
 	fd = open (map_name, O_RDONLY);
-	while (j < start + 1)
+	while (j <= start + 1)
 	{
 		line = get_next_line(fd);
 		if (line != NULL)

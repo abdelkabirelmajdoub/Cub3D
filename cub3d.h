@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/10/13 15:08:49 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/18 19:43:18 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@
 #  ifndef BUFFER_SIZE
 #   define BUFFER_SIZE 45
 #  endif
-#  ifndef TILE_SIZE
-#   define TILE_SIZE 64
+#  ifndef TILE
+#   define TILE 64
 #  endif
+#define SIZE_P 15
+#define SPEED 3
+#define MARGIN 3
+#define DEBUG 1
 
 char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
@@ -41,13 +45,10 @@ char	*before_newline(char *str);
 # endif
 /* ****************get_next_line*****************/
 // ---- raycasting __///
-#define WIDTH 1000
-#define HEIGHT 800
+#define WIDTH 1080
+#define HEIGHT 720
 #define PI  3.14159f
-#define BLOCK  64
-#define LEFT 65361
-#define RIGHT 65363
-
+#define ROT_SPEED 0.05
 #define FOV (PI / 3)
 #define NUM_RAYS 60
 #define RAY_STEP 5

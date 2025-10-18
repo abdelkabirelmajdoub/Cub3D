@@ -29,7 +29,7 @@ $(NAME): $(OBJS)
 	@	make -C libft
 	@	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FLAGMLX) -o $(NAME)
 
-%.o: %.c
+%.o: %.c cub3d.h
 	@	$(CC) $(CFLAGS) -c $< -I$(MLX42_INC) -o $@
 
 clean:
