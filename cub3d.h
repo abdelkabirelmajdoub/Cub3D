@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/10/18 19:43:18 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/19 10:21:42 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,11 @@
 #include <math.h>
 // # include "libft/libft.h"
 # include <MLX42/MLX42.h>
-#include <string.h>
-/* ****************get_next_line*****************/
-# ifndef GET_NEXT_LINE_H
-#  define GET_NEXT_LINE_H
+# include "settings.h"
 
-#  ifndef BUFFER_SIZE
-#   define BUFFER_SIZE 45
-#  endif
-#  ifndef TILE
-#   define TILE 64
-#  endif
-#define SIZE_P 15
-#define SPEED 3
-#define MARGIN 3
-#define DEBUG 1
+// #include <string.h>
+/* ****************get_next_line*****************/
+
 
 char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
@@ -42,16 +32,9 @@ int		ft_strchr(char *str);
 int		ft_strlen(char *str);
 char	*after_newline(char *str);
 char	*before_newline(char *str);
-# endif
+
 /* ****************get_next_line*****************/
 // ---- raycasting __///
-#define WIDTH 1080
-#define HEIGHT 720
-#define PI  3.14159f
-#define ROT_SPEED 0.05
-#define FOV (PI / 3)
-#define NUM_RAYS 60
-#define RAY_STEP 5
 
 
 typedef struct s_player

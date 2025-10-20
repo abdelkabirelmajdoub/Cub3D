@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/10/18 19:43:09 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/20 10:56:54 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,6 @@ void draw_player(t_game *g, int start_x, int start_y, int color)
 		}
 		y++;
 	}
-	// int i = 0;
-	// while (i < 50)
-	// {
-	// 	mlx_put_pixel(g->img, (start_x + x  / 2) + cos(g->player.angle) * i  , (start_y + y / 2) + sin(g->player.angle) * i, color);
-	// 	i++;
-	// }
 }
 
 void	draw_map(t_game *g)
@@ -136,30 +130,44 @@ float fixed_dist(float x1, float y1, float x2, float y2, t_game *game)
     float fix_dist = distance(delta_x, delta_y) * cos(angle);
     return fix_dist;
 }
-void draw_line(t_game *g, float start_x, int i)
+void draw_line(t_game *g, float ray_angle, int i)
 {
 	float ray_x = g->player.x;
 	float ray_y = g->player.y;
+	float step_x = cos(ray_angle) * 0.1;
+	float step_y = sin(ray_angle) * 0.1;
 	
-		while(!touch(g, ray_x, ray_y))
-		{
-			if (DEBUG)
-				mlx_put_pixel(g->img, ray_x, ray_y, 0xFF0000FF);
-			ray_x += cos(start_x);
-			ray_y += sin(start_x);
-		}	
+	int max_steps = WIDTH * 4;
+	int steps = 0;
+	while(!touch(g, ray_x, ray_y) && steps < max_steps)
+	{
+		if (DEBUG)
+			if (ray_x >= 0 && ray_x < WIDTH && ray_y >= 0 && ray_y < HEIGHT)
+                mlx_put_pixel(g->img, ray_x, ray_y, 0xFF0000FF);
+		ray_x += step_x;
+		ray_y += step_y;
+		steps++;
+	}	
 	if (!DEBUG)
 	{
 		float dist = fixed_dist(g->player.x, g->player.y, ray_x, ray_y, g);
+		if (dist < 1.0)
+			dist = 1.0;
 		float height = (TILE / dist) * (WIDTH / 2);
+		if (height > HEIGHT * 2)
+			height = HEIGHT * 2;
 		int start_y = (HEIGHT - height) / 2;
+		if (start_y < 0)
+			start_y = 0;
 		int end = start_y + height;
+		if (end > HEIGHT)
+			end = HEIGHT;
 		while(start_y < end)
 		{
-			mlx_put_pixel(g->img, i, start_y, 0xFF0000FF);
+			if (i >= 0 && i < WIDTH)
+				mlx_put_pixel(g->img, i, start_y, 0xFF00FF); // when remove this not gave me segv
 			start_y++;
 		}
-		
 	}
 }
 
@@ -168,8 +176,8 @@ void game_loop(void *param)
 	t_game *g;
 
 	g = (t_game *)param;
-	int dx = g->player.x;
-	int dy = g->player.y;
+	float dx = g->player.x;
+	float dy = g->player.y;
 	
 	if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
 		g->player.angle += ROT_SPEED;
@@ -221,19 +229,21 @@ void game_loop(void *param)
 	mlx_delete_image(g->mlx, g->img);
 	g->img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(g->mlx, g->img, 0, 0);
+	mlx_set_cursor_mode(g->mlx, MLX_MOUSE_DISABLED);
 	if (DEBUG)
 	{
 		draw_map(g);
 		draw_player(g, g->player.x, g->player.y, 0xFFFF0000);
 	}
 	
-	float fraction = PI / 3 / WIDTH;
-	float start_x = g->player.angle - PI / 6;
+	float fov = PI / 3;
+	float fraction = fov / WIDTH;
+	float start_angle = g->player.angle - fov / 2;
 	int i = 0;
 	while (i < WIDTH)
 	{
-		draw_line(g, start_x, i);
-		start_x += fraction;
+		float ray_angle = start_angle + (fraction * i);
+		draw_line(g, ray_angle, i);
 		i++;
 	}
 	
