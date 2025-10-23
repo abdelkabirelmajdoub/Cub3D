@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/10/23 14:27:34 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:52:08 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,14 @@ void	draw_map(t_game *g)
 
 bool can_move(t_game *g, float new_x, float new_y)
 {
-    int left   = (new_x + MARGIN) / TILE;
-    int right  = (new_x + SIZE_P - MARGIN) / TILE;
-    int top    = (new_y + MARGIN) / TILE;
-    int bottom = (new_y + SIZE_P - MARGIN) / TILE;
+    int grid_x = (int)(new_x / TILE);
+    int grid_y = (int)(new_y / TILE);
 
-    if (g->map[top][left] == '1') return false;
-    if (g->map[top][right] == '1') return false;
-    if (g->map[bottom][left] == '1') return false;
-    if (g->map[bottom][right] == '1') return false;
+    if (g->map[grid_y][grid_x] == '1')
+        return false;
     return true;
 }
+
 bool touch(t_game *g, float px, float py)
 {
 	int x = (px / TILE);
@@ -192,9 +189,9 @@ void game_loop(void *param)
 	g->player.prev_mouse_x = WIDTH / 2;
 
 	if (g->player.angle < 0)
-		g->player.angle = 2 * PI;
+		g->player.angle += 2 * PI;
 	if (g->player.angle > 2 * PI)
-		g->player.angle = 0;
+		g->player.angle -= 2 * PI;
 
 
 	if (mlx_is_key_down(g->mlx, MLX_KEY_W))
