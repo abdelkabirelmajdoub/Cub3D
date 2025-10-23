@@ -1,0 +1,56 @@
+
+COLORS_H
+
+// ─────────────────────────────
+// 🧱 WALL COLORS
+// ─────────────────────────────
+
+// Calm stone-like gray (neutral, realistic)
+COLOR_WALL_STONE     0xA9A9A9FF  
+
+// Brick red (warm, classic wall look)
+COLOR_WALL_BRICK     0xB22222FF  
+
+// Cool blue-gray (dungeon or modern vibe)
+COLOR_WALL_SLATE     0x708090FF  
+
+// Warm sand brown (wood/earth tone)
+COLOR_WALL_SAND      0xC2B280FF  
+
+// Olive green (forest/military feeling)
+COLOR_WALL_OLIVE     0x556B2FFF  
+
+
+
+// ─────────────────────────────
+// 🧭 FLOOR & CEILING COLORS
+// ─────────────────────────────
+
+// Soft light brown floor (wood-like)
+COLOR_FLOOR_WOOD     0x8B7355FF  
+
+// Cool gray floor (stone/metal)
+COLOR_FLOOR_STONE    0x696969FF  
+
+// Sky blue ceiling
+COLOR_CEIL_SKY       0x87CEEBFF  
+
+// Dark night ceiling
+COLOR_CEIL_NIGHT     0x191970FF  
+
+
+
+// ─────────────────────────────
+// 🔦 RAY / PLAYER COLORS
+// ─────────────────────────────
+
+// Player direction ray (soft yellow)
+COLOR_RAY_DIR        0xFFD700FF  
+
+// Player icon (cyan)
+COLOR_PLAYER         0x00FFFFFF  
+
+// Map grid (light gray)
+COLOR_GRID           0xCCCCCCFF  
+
+

@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/10/20 10:56:54 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:27:34 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void darw_square(mlx_image_t *img, int start_x, int start_y, int color)
 	}
 }
 
- 
+
 void draw_player(t_game *g, int start_x, int start_y, int color)
 {
 	int y;
@@ -67,7 +67,7 @@ void draw_player(t_game *g, int start_x, int start_y, int color)
 		while(x < SIZE_P)
 		{
 			if (start_x + x < WIDTH && start_y + y < HEIGHT)
-				mlx_put_pixel(g->img, start_x + x, start_y + y, color);
+				mlx_put_pixel(g->img,  start_x + x,  start_y + y, color);
 			x++;
 		}
 		y++;
@@ -82,9 +82,9 @@ void	draw_map(t_game *g)
 		for(x = 0; g->map[y][x]; x++)
 		{
 			if (g->map[y][x] == '1')
-				darw_square(g->img, x * TILE, y * TILE, 0x0000FFFF);
+				darw_square(g->img,  x * TILE,  y * TILE, 0x0000FFFF);
 			else
-				darw_square(g->img, x * TILE, y * TILE, 0xCCCCCCFF);
+				darw_square(g->img,  x * TILE,  y * TILE, 0xCCCCCCFF);
 		}
 	}
 	
@@ -104,11 +104,11 @@ bool can_move(t_game *g, float new_x, float new_y)
     if (g->map[bottom][right] == '1') return false;
     return true;
 }
-bool touch(t_game *g, int px, int py)
+bool touch(t_game *g, float px, float py)
 {
-	int x = px / TILE;
-	int y = py / TILE;
-	if (x < 0 || y < 0)
+	int x = (px / TILE);
+	int y = (py / TILE);
+	if (x <  0 || y < 0)
 		return true;
 	if (!g->map[y])
 		return true;
@@ -134,25 +134,24 @@ void draw_line(t_game *g, float ray_angle, int i)
 {
 	float ray_x = g->player.x;
 	float ray_y = g->player.y;
-	float step_x = cos(ray_angle) * 0.1;
-	float step_y = sin(ray_angle) * 0.1;
+	float step_x = cos(ray_angle) * RES;
+	float step_y = sin(ray_angle) * RES;
 	
-	int max_steps = WIDTH * 4;
-	int steps = 0;
-	while(!touch(g, ray_x, ray_y) && steps < max_steps)
+	// int max_steps = WIDTH * 4;
+	// int steps = 0;
+	while(!touch(g, ray_x, ray_y) )
 	{
 		if (DEBUG)
 			if (ray_x >= 0 && ray_x < WIDTH && ray_y >= 0 && ray_y < HEIGHT)
                 mlx_put_pixel(g->img, ray_x, ray_y, 0xFF0000FF);
 		ray_x += step_x;
 		ray_y += step_y;
-		steps++;
 	}	
 	if (!DEBUG)
 	{
 		float dist = fixed_dist(g->player.x, g->player.y, ray_x, ray_y, g);
-		if (dist < 1.0)
-			dist = 1.0;
+		if (dist < 0.1)
+			dist = 0.1;
 		float height = (TILE / dist) * (WIDTH / 2);
 		if (height > HEIGHT * 2)
 			height = HEIGHT * 2;
@@ -165,7 +164,7 @@ void draw_line(t_game *g, float ray_angle, int i)
 		while(start_y < end)
 		{
 			if (i >= 0 && i < WIDTH)
-				mlx_put_pixel(g->img, i, start_y, 0xFF00FF); // when remove this not gave me segv
+				mlx_put_pixel(g->img, i, start_y, 0x556B2FFF);
 			start_y++;
 		}
 	}
@@ -179,15 +178,24 @@ void game_loop(void *param)
 	float dx = g->player.x;
 	float dy = g->player.y;
 	
+	
 	if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
 		g->player.angle += ROT_SPEED;
 	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
 		g->player.angle -= ROT_SPEED;
 
+	
+	mlx_set_cursor_mode(g->mlx, MLX_MOUSE_DISABLED);
+	mlx_get_mouse_pos(g->mlx, &g->player.mouse_x, &g->player.mouse_y);	
+	g->player.angle += (g->player.mouse_x - g->player.prev_mouse_x) * 0.0025;
+	mlx_set_mouse_pos(g->mlx, WIDTH / 2, HEIGHT / 2);
+	g->player.prev_mouse_x = WIDTH / 2;
+
 	if (g->player.angle < 0)
 		g->player.angle = 2 * PI;
 	if (g->player.angle > 2 * PI)
 		g->player.angle = 0;
+
 
 	if (mlx_is_key_down(g->mlx, MLX_KEY_W))
 	{
@@ -213,37 +221,32 @@ void game_loop(void *param)
 	if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(g->mlx);
 		
-	if (can_move(g, dx, dy))
-	{
+	if (can_move(g, dx, g->player.y))
 		g->player.x = dx;
+	if (can_move(g, g->player.x, dy))
 		g->player.y = dy;
-	}
+		
 	if (g->player.x < 0)
 		g->player.x = 0;
-	if (g->player.x >= WIDTH)
-		g->player.x = WIDTH - 1;
 	if (g->player.y < 0)
 		g->player.y = 0;
-	if (g->player.y >= HEIGHT)
-		g->player.y = HEIGHT - 1;
 	mlx_delete_image(g->mlx, g->img);
 	g->img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(g->mlx, g->img, 0, 0);
-	mlx_set_cursor_mode(g->mlx, MLX_MOUSE_DISABLED);
+
+
 	if (DEBUG)
 	{
 		draw_map(g);
 		draw_player(g, g->player.x, g->player.y, 0xFFFF0000);
 	}
 	
-	float fov = PI / 3;
-	float fraction = fov / WIDTH;
-	float start_angle = g->player.angle - fov / 2;
+	float start_angle = g->player.angle - FOV / 2;
 	int i = 0;
 	while (i < WIDTH)
 	{
-		float ray_angle = start_angle + (fraction * i);
-		draw_line(g, ray_angle, i);
+		start_angle += FOV / WIDTH;
+		draw_line(g, start_angle, i);
 		i++;
 	}
 	
@@ -253,6 +256,7 @@ void	init_game(t_game *g)
 	g->mlx = mlx_init(WIDTH, HEIGHT, "3D Game", true);
 	g->img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(g->mlx, g->img, 0, 0);
+	g->player.prev_mouse_x = WIDTH;
 }
 void init_player(t_game *g)
 {
@@ -285,6 +289,18 @@ void init_player(t_game *g)
 	}
 	
 }
+void ll()
+{
+	system("leaks -q cub3D");
+}
+
+void free_up(char **s)
+{
+	int i = 0;
+	while(s[i])
+		free(s[i++]);
+	free(s);
+}
 int	main(int ac, char **av)
 {
 	t_game		game;
@@ -304,5 +320,7 @@ int	main(int ac, char **av)
 	init_player(&game);
 	mlx_loop_hook(game.mlx, &game_loop, &game);
 	mlx_loop(game.mlx);
+	free_up(game.map);
 	mlx_terminate(game.mlx);
+	// atexit(ll);
 }

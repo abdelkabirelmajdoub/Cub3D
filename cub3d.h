@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/10/19 10:21:42 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:34:36 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ typedef struct s_player
 	float	y;
 	float	angle;
 	float	speed;
-
+	float	prev_mouse_x;
+	int32_t	mouse_x;
+	int32_t	mouse_y;
+	bool mouse_locked;
+	
 }	t_player;
 
 typedef struct s_game
