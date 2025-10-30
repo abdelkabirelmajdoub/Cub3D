@@ -3,8 +3,10 @@ NAME	= cub3D
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
-SRC		= main.c parsing/get_next_line_utils.c parsing/get_next_line.c parsing/map_parsing.c parsing/map_pars.c parsing/texture_pars.c\
-			parsing/ft_split.c
+SRC		= main.c dda.c init.c collision.c draw.c game_loop.c \
+ 			parsing/get_next_line_utils.c parsing/get_next_line.c parsing/map_parsing.c parsing/map_pars.c parsing/texture_pars.c\
+			parsing/ft_split.c 
+
 
 
 OBJS	= $(SRC:.c=.o)

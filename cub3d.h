@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/10/20 14:34:36 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/10/30 11:59:21 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <fcntl.h>
 # include <stdio.h>
 #include <math.h>
+#include <float.h>
 // # include "libft/libft.h"
 # include <MLX42/MLX42.h>
-# include "settings.h"
 
 // #include <string.h>
 /* ****************get_next_line*****************/
@@ -34,6 +34,28 @@ char	*after_newline(char *str);
 char	*before_newline(char *str);
 
 /* ****************get_next_line*****************/
+/* **************** SETTINGS *****************/
+
+# ifndef GET_NEXT_LINE_H
+#  define GET_NEXT_LINE_H
+
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 45
+#endif
+#endif
+
+#define TILE 64
+#define SIZE_P 25
+#define SPEED 5
+#define MARGIN 1
+#define WIDTH 1920
+#define HEIGHT 1080
+#define PI  3.14159f
+#define ROT_SPEED 0.01
+#define FOV  PI/3
+#define RES 0.3
+#define MINI_SCALE 0.5
+
 // ---- raycasting __///
 
 
@@ -56,7 +78,27 @@ typedef struct s_game
 	mlx_image_t	*img;
 	t_player	player;
 	char		**map;
+	int			show_map;
 } t_game;
+
+typedef struct s_dda
+{
+	int		map_x;
+	int 	map_y;
+	int 	step_x;
+	int 	step_y;
+	int 	hit;
+	int 	side;
+	float	x_tile;
+	float	y_tile;
+	float	ray_x;
+	float	ray_y;
+	float	side_x;
+	float	side_y;
+	float	delta_x;
+	float	delta_y;
+	float	perp_wall;
+}			t_dda;
 
 /* ****************parsing*****************/
 
@@ -88,6 +130,19 @@ int		validate_color(char *str);
 int		path_check(t_textures	*paths);
 /* ****************parsing*****************/
 
-
+// ----- raycating ----//
+void	init_game(t_game *g);
+void    init_player(t_game *g);
+void    free_up(char **s);
+// --- drawing --//
+void    darw_square(mlx_image_t *img, int start_x, int start_y, int color);
+void	draw_player(t_game *g, float cx, float cy, int color);
+void	draw_map(t_game *g);
+bool	touch(t_game *g, float px, float py);
+bool    can_move(t_game *g, float new_x, float new_y);
+void	game_loop(void *param);
+void	draw_line(t_game *g, float ray_angle, int i);
+void	draw_rays(t_game *g);
+void	tree_d_render(t_game *g);
 
 #endif
