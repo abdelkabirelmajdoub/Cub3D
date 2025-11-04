@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 11:07:46 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/10/30 12:05:23 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:22:02 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	darw_square(mlx_image_t *img, int start_x, int start_y, int color)
 		{
 			if (start_x + x < WIDTH && start_y + y < HEIGHT)
 			{
-				if (x < 2 || y < 2)
+				if (x < 1 || y < 1)
 					mlx_put_pixel(img, start_x + x, start_y + y , 0xB22222FF);
 				else
 					mlx_put_pixel(img, start_x + x, start_y + y, color);	

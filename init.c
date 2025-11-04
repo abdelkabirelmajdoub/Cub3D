@@ -6,32 +6,52 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 14:04:19 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/10/30 10:17:01 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/02 11:17:22 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	set_sizeof_map(t_game *g)
+{
+	int	i;
+	int	len;
+	
+	i = 0;
+	g->map_height = 0;
+	g->map_height = 0;
+	while(g->map[i])
+	{
+		len = ft_strlen(g->map[i]);
+		if (len > g->map_width)
+			g->map_width = len;
+		i++;
+	}
+	g->map_height = i;
+}
 
 void	init_game(t_game *g)
 {
 	g->mlx = mlx_init(WIDTH, HEIGHT, "3D Game", true);
 	g->img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(g->mlx, g->img, 0, 0);
-	g->player.prev_mouse_x = WIDTH;
+	g->player.prev_mouse_x = WIDTH / 2;
     g->show_map = 0;
-	g->player.mouse_locked = true;
+	g->player.mouse_locked = false;
+	set_sizeof_map(g);
 }
 
 void    set_direction_player(t_game *g, int x, int y)
 {
     if (g->map[y][x] == 'E')
-        g->player.angle = 0;
+        g->player.angle = 0.0f;
     if (g->map[y][x] == 'W')
-        g->player.angle = PI;
+        g->player.angle = M_PI;
     if (g->map[y][x] == 'S')
-        g->player.angle = PI / 2;
+        g->player.angle = M_PI / 2;
     if (g->map[y][x] == 'N')
-        g->player.angle = 3 * PI / 2;
+   		g->player.angle = (3 * M_PI) / 2;
+	
 }
 
 void    init_player(t_game *g)

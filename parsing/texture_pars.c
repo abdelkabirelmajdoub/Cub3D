@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 11:56:16 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/10/12 11:53:22 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/02 10:47:04 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,21 +114,26 @@ int	ft_atoi(const char *str)
 		r = r * 10 + (str[i] - '0');
 		i++;
 	}
+	if (str[i] != '\0')
+		return (-1);
 	return (r * s);
 }
 
 int	validate_color(char *str)
 {
-	int		r;
-	int		g;
-	int		b;
-	char	**numbers;
+	int			r;
+	int			g;
+	int			b;
+	char		**numbers;
+	static int	i;
 
 	numbers = ft_split(str, ',');
+	while (numbers[i])
+		i++;
 	r = ft_atoi(numbers[0]);
 	g = ft_atoi(numbers[1]);
 	b = ft_atoi(numbers[2]);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255 || i != 3)
 	{
 		free (numbers[0]);
 		free (numbers[1]);

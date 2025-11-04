@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 11:39:24 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/01 13:06:09 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/11/03 13:43:00 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	texture_init(t_game *g)
 {
-g->tex_no = mlx_load_png("./textures/no.png");
-g->tex_so = mlx_load_png("./textures/so.png");
-g->tex_ea = mlx_load_png("./textures/ea.png");
-g->tex_we = mlx_load_png("./textures/we.png");
-if (!g->tex_no || !g->tex_so || !g->tex_ea || !g->tex_we)
-{
-    printf("Failed to load texture\n");
-    exit(1);
-}
+    g->no = mlx_load_png("./textures/no.png");
+    g->so = mlx_load_png("./textures/so.png");
+    g->ea = mlx_load_png("./textures/ea.png");
+    g->we = mlx_load_png("./textures/we.png");
+    if (!g->no || !g->so || !g->ea || !g->we)
+    {
+        printf("Failed to load texture\n");
+        exit(1);
+    }
 }
 
 uint32_t get_tex_color(mlx_texture_t *tex, int x, int y)

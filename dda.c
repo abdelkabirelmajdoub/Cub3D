@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:40:59 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/10/30 12:09:48 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:43:06 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	set_calcul(t_dda *p, t_game *g, float ray_angle)
 	p->ray_y = sin(ray_angle);
 	p->hit = 0;
 	if (!p->ray_x)
-		p->delta_x = FLT_MIN;
+		p->delta_x = 1e30f;
 	else
-		p->delta_x = fabs(1 / p->ray_x);
+		p->delta_x = fabs(1.0f / p->ray_x);
 	if (!p->ray_y)
-		p->delta_y = FLT_MIN;
+		p->delta_y = 1e30f;
 	else
-		p->delta_y = fabs(1 / p->ray_y);
+		p->delta_y = fabs(1.0f / p->ray_y);
 }
 
 void	sides_init(t_dda *p)
@@ -57,6 +57,7 @@ void	sides_init(t_dda *p)
 
 void	dda_loop(t_dda *p, t_game *g, float ray_angle)
 {
+	
 	while (!p->hit)
 	{
 		if (p->side_x < p->side_y)
@@ -71,16 +72,36 @@ void	dda_loop(t_dda *p, t_game *g, float ray_angle)
 			p->map_y += p->step_y;
 			p->side = 1;
 		}
+		if (p->map_x < 0 || p->map_y < 0)
+		{
+			p->hit = 1;
+			break;
+		}
 		if (g->map[p->map_y][p->map_x] == '1')
 			p->hit = 1;
 	}
+	if (p->side == 0)
+	{
+		if (p->ray_x > 0)
+			p->tex = g->ea;
+		else
+			p->tex = g->we;
+	}
+	else
+	{
+		if (p->ray_y > 0)
+			p->tex = g->so;
+		else
+			p->tex = g->no;
+	}
+
 	if (!p->side)
 		p->perp_wall = p->side_x - p->delta_x;
 	else
 		p->perp_wall = p->side_y - p->delta_y;
 	p->perp_wall = p->perp_wall * cosf(ray_angle - g->player.angle);
-	if (p->perp_wall < 0.0f)
-		p->perp_wall = 1.0f;
+	if (p->perp_wall <= 0.0001f)
+		p->perp_wall = 0.0001f;
 }
 
 void	draw_line(t_game *g, float ray_angle, int i)
@@ -100,12 +121,27 @@ void	draw_line(t_game *g, float ray_angle, int i)
 	end_draw = line_height / 2 + HEIGHT / 2;
 	if (end_draw > HEIGHT)
 		end_draw = HEIGHT;
+	int j = 0;
+	while(j < start_draw)
+	{
+		mlx_put_pixel(g->img, i, j, 0x87CEEBFF);
+		j++;
+	}
 	while (start_draw < end_draw)
 	{
 		if (p.side)
+		{
 			mlx_put_pixel(g->img, i, start_draw, 0x8B7355F0);
+		}
 		else
-			mlx_put_pixel(g->img, i, start_draw, 0x8B7355FF);
+		{
+			mlx_put_pixel(g->img, i, start_draw, 0x191970FF);
+		}
 		start_draw++;
+	}
+	while(end_draw < HEIGHT)
+	{
+		mlx_put_pixel(g->img, i, end_draw, 0xCCCCCCFF);
+		end_draw++;
 	}
 }

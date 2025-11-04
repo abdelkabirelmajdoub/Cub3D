@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/10/30 11:59:21 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/02 13:59:04 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-#include <math.h>
-#include <float.h>
+# include <math.h>
+# include <float.h>
 // # include "libft/libft.h"
 # include <MLX42/MLX42.h>
 
@@ -46,15 +46,16 @@ char	*before_newline(char *str);
 
 #define TILE 64
 #define SIZE_P 25
-#define SPEED 5
+#define SPEED 3
 #define MARGIN 1
 #define WIDTH 1920
 #define HEIGHT 1080
-#define PI  3.14159f
 #define ROT_SPEED 0.01
-#define FOV  PI/3
+#define FOV  M_PI/3
 #define RES 0.3
-#define MINI_SCALE 0.5
+
+
+
 
 // ---- raycasting __///
 
@@ -69,17 +70,35 @@ typedef struct s_player
 	int32_t	mouse_x;
 	int32_t	mouse_y;
 	bool mouse_locked;
-	
 }	t_player;
+
+
+typedef struct s_textures
+{
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	char	*floor_color;
+	char	*ceiling_color;
+}	t_textures;
 
 typedef struct s_game
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	t_player	player;
-	char		**map;
-	int			show_map;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_player		player;
+	char			**map;
+	int				show_map;
+	int				map_width;
+	int				map_height;
+	t_textures		*text_paths;
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*ea;
+	mlx_texture_t	*we;
 } t_game;
+
 
 typedef struct s_dda
 {
@@ -98,20 +117,12 @@ typedef struct s_dda
 	float	delta_x;
 	float	delta_y;
 	float	perp_wall;
+	mlx_texture_t *tex;
 }			t_dda;
 
 /* ****************parsing*****************/
 
 
-typedef struct s_textures
-{
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	char	*floor_color;
-	char	*ceiling_color;
-}	t_textures;
 
 char	**convert_map(char *map_name, int start);
 int		map_start(char *map_name);
@@ -144,5 +155,6 @@ void	game_loop(void *param);
 void	draw_line(t_game *g, float ray_angle, int i);
 void	draw_rays(t_game *g);
 void	tree_d_render(t_game *g);
-
+void	texture_init(t_game *g);
+uint32_t get_tex_color(mlx_texture_t *tex, int x, int y);
 #endif

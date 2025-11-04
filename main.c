@@ -6,36 +6,49 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/10/30 11:47:11 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 10:13:09 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	**main_helper(char *map_name, t_player *player_pos)
+int        map_name_check (char *map_name)
 {
-	char		**map;
-	t_textures	*paths;
-	int			fd;
-	int			map_lines;
-	int			map_s;
-
-	fd = open(map_name, O_RDONLY);
-	paths = malloc(sizeof(t_textures));
-	if (!paths)
-		return (free(player_pos), NULL);
-	map_s = map_start(map_name);
-	map = convert_map(map_name, map_s);
-	get_paths(paths, fd, map_s);
-	map_lines = 0;
-	while (map[map_lines])
-		map_lines++;
-	if (map_pars(map, map_lines, player_pos) == 0
-		|| path_check(paths) == 0)
-		return (NULL);
-	return (map);
+    if (ft_strlen(map_name) <= 4
+        || map_name[ft_strlen(map_name) - 1] != 'b'
+        || map_name[ft_strlen(map_name) - 2] != 'u'
+        || map_name[ft_strlen(map_name) - 3] != 'c'
+        || map_name[ft_strlen(map_name) - 4] != '.'
+        || map_name[ft_strlen(map_name) - 5] == '/')
+        return (0);
+    return (1);
 }
 
+char    **main_helper(char *map_name, t_player *player_pos)
+{
+    char        **map;
+    t_textures    *paths;
+    int            fd;
+    int            map_lines;
+    int            map_s;
+
+    if (map_name_check(map_name) == 0)
+        return (NULL);
+    fd = open(map_name, O_RDONLY);
+    paths = malloc(sizeof(t_textures));
+    if (!paths)
+        return (free(player_pos), NULL);
+    map_s = map_start(map_name);
+    map = convert_map(map_name, map_s);
+    get_paths(paths, fd, map_s);
+    map_lines = 0;
+    while (map[map_lines])
+        map_lines++;
+    if (map_pars(map, map_lines, player_pos) == 0
+        || path_check(paths) == 0)
+        return (NULL);
+    return (map);
+}
 
 void	tree_d_render(t_game *g)
 {
