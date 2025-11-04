@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/04 11:15:50 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:23:20 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int        map_name_check (char *map_name)
     return (1);
 }
 
-char    **main_helper(char *map_name, t_player *player_pos, t_textures *paths)
+char    **main_helper(char *map_name, t_player *player_pos, t_textures *paths, t_game *game)
 {
     char        **map;
+  
     int            fd;
     int            map_lines;
     int            map_s;
@@ -44,7 +45,7 @@ char    **main_helper(char *map_name, t_player *player_pos, t_textures *paths)
     while (map[map_lines])
         map_lines++;
     if (map_pars(map, map_lines, player_pos) == 0
-        || path_check(paths) == 0)
+        || path_check(paths, game) == 0)
         return (NULL);
     return (map);
 }
@@ -74,7 +75,7 @@ int	main(int ac, char **av)
 		perror("Wrong Number of args!");
 		return (1);
 	}
-	game.map = main_helper(av[1], &game.player, &paths);
+	game.map = main_helper(av[1], &game.player, &paths, &game);
 	if (!game.map)
 	{
 		perror("Fix your map/paths");

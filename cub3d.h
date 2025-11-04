@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/11/04 11:14:35 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:23:49 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ typedef struct s_game
 	mlx_texture_t	*so;
 	mlx_texture_t	*ea;
 	mlx_texture_t	*we;
+	int				floor_color;
+	int				ceil_color;
 } t_game;
 
 
@@ -117,6 +119,11 @@ typedef struct s_dda
 	float	delta_x;
 	float	delta_y;
 	float	perp_wall;
+	float	wall_x;
+	int		tex_x;
+	float	step;
+	float	tex_pos_y;
+	uint32_t color;
 	mlx_texture_t *tex;
 }			t_dda;
 
@@ -135,10 +142,10 @@ int		space_check(char **map, int line);
 void	get_playerpos(char **map, int line, t_player	*player_pos);
 int		map_pars(char **map, int map_lines, t_player *player_pos);
 void	get_paths(t_textures *paths, int fd, int line);
-char    **main_helper(char *map_name, t_player *player_pos, t_textures *paths);
+char    **main_helper(char *map_name, t_player *player_pos, t_textures *paths, t_game *game);
 char	**ft_split(char const *s, char c);
-int		validate_color(char *str);
-int		path_check(t_textures	*paths);
+int		validate_color(char *str, int *color);
+int		path_check(t_textures	*paths, t_game *game);
 /* ****************parsing*****************/
 
 // ----- raycating ----//

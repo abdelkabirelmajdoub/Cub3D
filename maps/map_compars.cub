@@ -3,12 +3,12 @@ SO ./textures/ea.png
 WE ./textures/so.png
 EA ./textures/we.png
 
-F 220,100,0
-C 225,30,0
+F 100,100,100
+C 245,245,245
 
 1111
-1001
-1S01
+10001
+10W01
 1001
 1001
 1001

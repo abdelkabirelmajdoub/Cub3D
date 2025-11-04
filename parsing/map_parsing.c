@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:09:09 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/04 10:11:56 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:04:02 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ int map_start(char *map_name)
 		{
 			free(line);
 			close(fd);
-			return line_num;
+			get_next_line(-1);
+			return (line_num );
 		}
 		free(line);
 		line_num++;
 	}
 	close(fd);
+	get_next_line(-1);
 	return -1;
 }
 
@@ -105,7 +107,7 @@ char	**convert_map(char *map_name, int start)
 	i = 0;
 	j = 0;
 	fd = open (map_name, O_RDONLY);
-	while (j <= start + 1)
+	while (j < start)
 	{
 		line = get_next_line(fd);
 		if (line != NULL)

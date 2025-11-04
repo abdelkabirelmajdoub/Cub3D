@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_pars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:39:30 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/02 10:49:51 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 12:02:50 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	map_content(char **map, int line)
 	{
 		j = 0;
 		if (map[i][0] == '\n' || map[i][0] == '\0')
-			return (0);
+    		return (0);
 		while (map[i][j] != '\0' && map[i][j] != '\n')
 		{
 			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' '

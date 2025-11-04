@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 11:56:16 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/02 10:47:04 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:31:22 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	get_paths(t_textures *paths, int fd, int line)
 	}
 }
 
-int	path_check(t_textures	*paths)
+int	path_check(t_textures	*paths, t_game *game)
 {
 	int	fd_no;
 	int	fd_so;
@@ -74,8 +74,8 @@ int	path_check(t_textures	*paths)
 	fd_we = open(paths->we_path, O_RDONLY);
 	fd_ea = open(paths->ea_path, O_RDONLY);
 	if (fd_no == -1 || fd_so == -1 || fd_we == -1 || fd_ea == -1
-		|| validate_color(paths->floor_color) == 0
-		|| validate_color(paths->ceiling_color) == 0)
+		|| validate_color(paths->floor_color, &game->floor_color) == 0
+		|| validate_color(paths->ceiling_color, &game->ceil_color) == 0)
 	{
 		if (fd_no != -1)
 			close(fd_no);
@@ -119,7 +119,7 @@ int	ft_atoi(const char *str)
 	return (r * s);
 }
 
-int	validate_color(char *str)
+int	validate_color(char *str, int *color)
 {
 	int			r;
 	int			g;
@@ -133,6 +133,7 @@ int	validate_color(char *str)
 	r = ft_atoi(numbers[0]);
 	g = ft_atoi(numbers[1]);
 	b = ft_atoi(numbers[2]);
+	*color = (r  << 16) | (g << 8) | b ;
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255 || i != 3)
 	{
 		free (numbers[0]);
@@ -145,5 +146,6 @@ int	validate_color(char *str)
 	free (numbers[1]);
 	free (numbers[2]);
 	free (numbers);
+
 	return (1);
 }
