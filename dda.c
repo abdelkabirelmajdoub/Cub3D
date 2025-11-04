@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:40:59 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/03 13:43:06 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:26:41 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	dda_loop(t_dda *p, t_game *g, float ray_angle)
 		else
 			p->tex = g->no;
 	}
-
+	printf("tex : %p\n", g->no);
 	if (!p->side)
 		p->perp_wall = p->side_x - p->delta_x;
 	else

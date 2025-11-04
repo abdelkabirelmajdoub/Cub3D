@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/04 10:13:09 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:15:50 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ int        map_name_check (char *map_name)
     return (1);
 }
 
-char    **main_helper(char *map_name, t_player *player_pos)
+char    **main_helper(char *map_name, t_player *player_pos, t_textures *paths)
 {
     char        **map;
-    t_textures    *paths;
     int            fd;
     int            map_lines;
     int            map_s;
@@ -68,18 +67,20 @@ void	tree_d_render(t_game *g)
 int	main(int ac, char **av)
 {
 	t_game		game;
+    t_textures  paths;
 
 	if (ac != 2)
 	{
 		perror("Wrong Number of args!");
 		return (1);
 	}
-	game.map = main_helper(av[1], &game.player);
+	game.map = main_helper(av[1], &game.player, &paths);
 	if (!game.map)
 	{
 		perror("Fix your map/paths");
 		return (1);
 	}
+    texture_init(&game);
 	init_game(&game);
 	init_player(&game);
 	mlx_loop_hook(game.mlx, &game_loop, &game);

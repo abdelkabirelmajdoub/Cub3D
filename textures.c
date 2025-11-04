@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 11:39:24 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/03 13:43:00 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:21:02 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	texture_init(t_game *g)
 {
-    g->no = mlx_load_png("./textures/no.png");
-    g->so = mlx_load_png("./textures/so.png");
-    g->ea = mlx_load_png("./textures/ea.png");
-    g->we = mlx_load_png("./textures/we.png");
+    g->no = mlx_load_png("textures/so.png");
+    g->so = mlx_load_png("textures/so.png");
+    g->ea = mlx_load_png("textures/so.png");
+    g->we = mlx_load_png("textures/so.png");
     if (!g->no || !g->so || !g->ea || !g->we)
     {
         printf("Failed to load texture\n");
