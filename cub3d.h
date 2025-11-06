@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/11/06 10:32:44 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:42:19 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdio.h>
 # include <math.h>
 # include <float.h>
-// # include "libft/libft.h"
 # include <MLX42/MLX42.h>
 
 // #include <string.h>
@@ -45,14 +44,14 @@ char	*before_newline(char *str);
 #endif
 
 #define TILE 64
-#define SIZE_P 10
+#define SIZE_P 25
 #define SPEED 3
 #define MARGIN 1
 #define WIDTH 1920
 #define HEIGHT 1080
 #define ROT_SPEED 0.01
 #define FOV  M_PI/3
-#define SCALE 0.3
+#define RES 0.3
 
 
 
@@ -142,7 +141,7 @@ int		map_content(char **map, int line);
 int		space_check(char **map, int line);
 void	get_playerpos(char **map, int line, t_player	*player_pos);
 int		map_pars(char **map, int map_lines, t_player *player_pos);
-void	get_paths(t_textures *paths, int fd, int line);
+int		get_paths(t_textures *paths, int fd, int line);
 char    **main_helper(char *map_name, t_player *player_pos, t_textures *paths, t_game *game);
 char	**ft_split(char const *s, char c);
 int		validate_color(char *str, int *color);

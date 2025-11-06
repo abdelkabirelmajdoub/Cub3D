@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:27:04 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/06 10:38:00 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:55:45 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	check_move_rotate(t_game *g, float dx, float dy)
 	if (g->player.y < 0)
 		g->player.y = 0.0f;
 }
+
 
 void	game_loop(void *param)
 {

@@ -11,7 +11,6 @@ SRC		= main.c dda.c init.c collision.c draw.c game_loop.c textures.c \
 
 OBJS	= $(SRC:.c=.o)
 
-LIBFT	= libft/libft.a
 
 BREW_PREFIX = $(shell brew --prefix glfw)
 
@@ -28,18 +27,15 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@	echo "\033[1;32m  🛤  Building cub3D ... 🔮     \033[0m"
-	@	make -C libft
 	@	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FLAGMLX) -o $(NAME)
 
 %.o: %.c cub3d.h
 	@	$(CC) $(CFLAGS) -c $< -I$(MLX42_INC) -o $@
 
 clean:
-	@	make clean -C libft
 	@	rm -f $(OBJS)
 
 fclean: clean
-	@	make fclean -C libft
 	@	rm -f $(NAME)
 
 re: fclean all
