@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/11/05 12:27:20 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/06 10:32:44 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ char	*before_newline(char *str);
 #endif
 
 #define TILE 64
-#define SIZE_P 25
+#define SIZE_P 10
 #define SPEED 3
 #define MARGIN 1
 #define WIDTH 1920
 #define HEIGHT 1080
 #define ROT_SPEED 0.01
 #define FOV  M_PI/3
-#define RES 0.3
+#define SCALE 0.3
 
 
 
