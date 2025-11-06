@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/11/04 14:23:49 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:27:20 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_dda
 	float	delta_x;
 	float	delta_y;
 	float	perp_wall;
+	float	dist;
 	float	wall_x;
 	int		tex_x;
 	float	step;

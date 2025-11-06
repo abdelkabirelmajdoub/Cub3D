@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:40:59 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/04 14:33:46 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:27:46 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ void	dda_loop(t_dda *p, t_game *g, float ray_angle)
 			p->tex = g->no;
 	}
 	if (!p->side)
-		p->perp_wall = p->side_x - p->delta_x;
+		p->dist = p->side_x - p->delta_x;
 	else
-		p->perp_wall = p->side_y - p->delta_y;
-	p->perp_wall = p->perp_wall * cosf(ray_angle - g->player.angle);
+		p->dist = p->side_y - p->delta_y;
+	p->perp_wall = p->dist * cosf(ray_angle - g->player.angle);
 	if (p->perp_wall <= 0.0001f)
 		p->perp_wall = 0.0001f;
 }
@@ -116,9 +116,9 @@ void	draw_line(t_game *g, float ray_angle, int i)
 	sides_init(&p);
 	dda_loop(&p, g, ray_angle);
 	if (p.side == 0)
-		p.wall_x = g->player.y / TILE + p.perp_wall * p.ray_y;
+		p.wall_x = p.y_tile + p.dist * p.ray_y;
 	else
-		p.wall_x = g->player.x / TILE + p.perp_wall * p.ray_x;
+		p.wall_x = p.x_tile + p.dist * p.ray_x;
 	p.wall_x -= (int)p.wall_x;
 	if (p.wall_x < 0.0f)
 		p.wall_x += 1.0f;

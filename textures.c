@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 11:39:24 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/04 13:44:21 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/05 13:57:46 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	texture_init(t_game *g)
 
 uint32_t get_tex_color(mlx_texture_t *tex, int x, int y)
 {
-    int i = (y * tex->width + x) * 4;
+    int i;
+
+    i = (y * tex->width + x) * 4;
     return (tex->pixels[i + 0] << 24 |
             tex->pixels[i + 1] << 16 |
             tex->pixels[i + 2] << 8  |
