@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/06 11:37:36 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/11/09 11:04:59 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	tree_d_render(t_game *g)
 		i++;
 	}
 }
-
+void ll()
+{
+    system("leaks -q cub3D");
+}
 int	main(int ac, char **av)
 {
 	t_game		game;

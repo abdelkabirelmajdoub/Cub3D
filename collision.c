@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 11:29:10 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/01 13:00:01 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/09 11:01:50 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,4 @@ bool	can_move(t_game *g, float new_x, float new_y)
 	if (g->map[bottom][right] == '1')
 		return (false);
 	return (true);
-}
-
-bool	touch(t_game *g, float px, float py)
-{
-	int	x;
-	int	y;
-
-	x = (int)(px / TILE);
-	y = (int)(py / TILE);
-	if (x < 0 || y < 0)
-		return (true);
-	if (!g->map[y])
-		return (true);
-	if (!g->map[y][x])
-		return (true);
-	if (g->map[y][x] == '1')
-		return (true);
-	return (false);
 }

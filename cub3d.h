@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/11/06 11:42:19 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/11/09 10:57:55 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,18 @@ char	*before_newline(char *str);
 #endif
 #endif
 
-#define TILE 64
-#define SIZE_P 25
-#define SPEED 3
+#define TILE 15
+#define SIZE_P 5
+#define SPEED 1
 #define MARGIN 1
 #define WIDTH 1920
 #define HEIGHT 1080
 #define ROT_SPEED 0.01
 #define FOV  M_PI/3
-#define RES 0.3
+#define MINI_SIZE 150
+#define H_MAP 320
+#define W_MAP 150
+
 
 
 
@@ -127,41 +130,54 @@ typedef struct s_dda
 	mlx_texture_t *tex;
 }			t_dda;
 
+typedef struct s_minimap
+{
+	int	visible;
+	int	p_map_x;
+	int	p_map_y;
+	int	draw_x;
+	int	draw_y;
+}		t_minimap;
+
+
 /* ****************parsing*****************/
 
 
 
-char	**convert_map(char *map_name, int start);
-int		map_start(char *map_name);
-int		count_chars(char *map_name);
-int		count_line(char *map_name);
-int		surrounded_bywalls(char **map, int line);
-int		player_check(char **map, int line);
-int		map_content(char **map, int line);
-int		space_check(char **map, int line);
-void	get_playerpos(char **map, int line, t_player	*player_pos);
-int		map_pars(char **map, int map_lines, t_player *player_pos);
-int		get_paths(t_textures *paths, int fd, int line);
-char    **main_helper(char *map_name, t_player *player_pos, t_textures *paths, t_game *game);
-char	**ft_split(char const *s, char c);
-int		validate_color(char *str, int *color);
-int		path_check(t_textures	*paths, t_game *game);
+char		**convert_map(char *map_name, int start);
+int			map_start(char *map_name);
+int			count_chars(char *map_name);
+int			count_line(char *map_name);
+int			surrounded_bywalls(char **map, int line);
+int			player_check(char **map, int line);
+int			map_content(char **map, int line);
+int			space_check(char **map, int line);
+void		get_playerpos(char **map, int line, t_player	*player_pos);
+int			map_pars(char **map, int map_lines, t_player *player_pos);
+int			get_paths(t_textures *paths, int fd, int line);
+char		**main_helper(char *map_name, t_player *player_pos, t_textures *paths, t_game *game);
+char		**ft_split(char const *s, char c);
+int			validate_color(char *str, int *color);
+int			path_check(t_textures	*paths, t_game *game);
 /* ****************parsing*****************/
 
 // ----- raycating ----//
-void	init_game(t_game *g);
-void    init_player(t_game *g);
-void    free_up(char **s);
+void		init_game(t_game *g);
+void		init_player(t_game *g);
+void    	free_up(char **s);
+void		dda_loop(t_dda *p, t_game *g, float ray_angle);
 // --- drawing --//
-void    darw_square(mlx_image_t *img, int start_x, int start_y, int color);
-void	draw_player(t_game *g, float cx, float cy, int color);
-void	draw_map(t_game *g);
-bool	touch(t_game *g, float px, float py);
-bool    can_move(t_game *g, float new_x, float new_y);
-void	game_loop(void *param);
-void	draw_line(t_game *g, float ray_angle, int i);
-void	draw_rays(t_game *g);
-void	tree_d_render(t_game *g);
-void	texture_init(t_game *g);
-uint32_t get_tex_color(mlx_texture_t *tex, int x, int y);
+void    	draw_square(mlx_image_t *img, int start_x, int start_y, int color);
+void		draw_player(t_game *g, int color);
+void		ceill_draw(t_game *g, int start_draw, int i);
+void		floor_draw(t_game *g, int end_draw, int i);
+void		draw_map(t_game *g);
+
+bool		touch(t_game *g, float px, float py);
+bool		can_move(t_game *g, float new_x, float new_y);
+void		game_loop(void *param);
+void		draw_line(t_game *g, float ray_angle, int i);
+void		tree_d_render(t_game *g);
+void		texture_init(t_game *g);
+uint32_t	get_tex_color(mlx_texture_t *tex, int x, int y);
 #endif

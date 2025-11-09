@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:27:04 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/05 12:55:45 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/09 10:46:52 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,21 @@ void	rotation_face(t_game *g)
 	}
 }
 
-
-void suspand_cursor(t_game *g)
+void	suspand_cursor(t_game *g)
 {
-    if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT_CONTROL) && !g->player.mouse_locked)
-    {
-        g->player.mouse_locked = true;
-        mlx_set_cursor_mode(g->mlx, MLX_MOUSE_DISABLED);
-        mlx_set_mouse_pos(g->mlx, WIDTH / 2, HEIGHT / 2);
-    }
-    if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT_SHIFT))
-    {
-        g->player.mouse_locked = false;
-        mlx_set_cursor_mode(g->mlx, MLX_MOUSE_NORMAL);
-    }
+	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT_CONTROL) 
+		&& !g->player.mouse_locked)
+	{
+		g->player.mouse_locked = true;
+		mlx_set_cursor_mode(g->mlx, MLX_MOUSE_DISABLED);
+		mlx_set_mouse_pos(g->mlx, WIDTH / 2, HEIGHT / 2);
+	}
+	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT_SHIFT))
+	{
+		g->player.mouse_locked = false;
+		mlx_set_cursor_mode(g->mlx, MLX_MOUSE_NORMAL);
+	}
 }
-
 
 void	check_move_rotate(t_game *g, float dx, float dy)
 {
@@ -83,7 +82,6 @@ void	check_move_rotate(t_game *g, float dx, float dy)
 	if (g->player.y < 0)
 		g->player.y = 0.0f;
 }
-
 
 void	game_loop(void *param)
 {
@@ -104,9 +102,5 @@ void	game_loop(void *param)
 	g->img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(g->mlx, g->img, 0, 0);
 	tree_d_render(g);
-	if (g->show_map)
-	{
-		draw_map(g);
-		draw_player(g, g->player.x, g->player.y, 0xFFFF0000);
-	}
+	draw_map(g);
 }
