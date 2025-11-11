@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:09:09 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/11 09:56:41 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/11/11 11:56:57 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ char	**convert_map(char *map_name, int start)
 	int		fd;
 	char	**array;
 
-	array = malloc (count_line(map_name) * sizeof(char *));
-	if (!array)
+	array = malloc ((count_line(map_name) + 1) * sizeof(char *));
+	if (!array )
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -117,6 +117,7 @@ char	**convert_map(char *map_name, int start)
 		array[i] = get_next_line(fd);
 		i++;
 	}
+	array[i] = NULL;
 	return (array);
 }
 

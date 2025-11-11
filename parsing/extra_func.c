@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 09:24:03 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/11 11:23:12 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/11 12:25:53 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	validate_help(char *str)
 	int	i;
 	int	x;
 
+	if (!str)
+		return (0);
 	i = 0;
 	x = 0;
 	while (str[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_pars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:39:30 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/11 09:46:20 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/11/11 12:07:55 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	player_check(char **map, int line)
 	}
 	if (p != 1)
 	{
-		perror("The problem is with Player");
+		perror("Error\nThe problem is with Player");
 		return (0);
 	}
 	return (1);
