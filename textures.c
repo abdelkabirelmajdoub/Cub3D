@@ -12,12 +12,12 @@
 
 #include "cub3d.h"
 
-void	texture_init(t_game *g)
+void    texture_init(t_game *g, t_textures *paths)
 {
-	g->no = mlx_load_png("textures/no.png");
-	g->so = mlx_load_png("textures/so.png");
-	g->ea = mlx_load_png("textures/ea.png");
-	g->we = mlx_load_png("textures/we.png");
+    g->no = mlx_load_png(paths->no_path);
+    g->so = mlx_load_png(paths->so_path);
+    g->ea = mlx_load_png(paths->ea_path);
+    g->we = mlx_load_png(paths->we_path);
 	if (!g->no || !g->so || !g->ea || !g->we)
 	{
 		printf("Failed to load texture\n");

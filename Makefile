@@ -4,6 +4,7 @@ CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
 SRC		= main.c dda.c init.c collision.c draw.c game_loop.c textures.c d_utils.c \
+			parsing/extra_func.c \
  			parsing/get_next_line_utils.c parsing/get_next_line.c parsing/map_parsing.c parsing/map_pars.c parsing/texture_pars.c\
 			parsing/ft_split.c 
 

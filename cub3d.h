@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/11/09 11:21:02 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/11 11:05:56 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,13 +141,16 @@ char	**main_helper(char *map_name, t_player *player_pos,
 			t_textures *paths, t_game *game);
 char	**ft_split(char const *s, char c);
 int		validate_color(char *str, int *color);
-int		path_check(t_textures	*paths, t_game *game);
+int		path_check(t_textures *paths, t_game *game);
+int		ft_atoi(const char *str);
+char	*ft_strcpy(char *dest, char *src);
 /* ****************parsing*****************/
 
 // ----- raycating ----//
 void	init_game(t_game *g);
 void	init_player(t_game *g);
 void	free_up(char **s);
+void	free_path(t_textures *path, t_game *g);
 void	dda_loop(t_dda *p, t_game *g, float ray_angle);
 // --- drawing --//
 void	draw_square(mlx_image_t *img, int start_x, int start_y, int color);
@@ -159,5 +162,5 @@ bool	can_move(t_game *g, float new_x, float new_y);
 void	game_loop(void *param);
 void	draw_line(t_game *g, float ray_angle, int i);
 void	tree_d_render(t_game *g);
-void	texture_init(t_game *g);
+void    texture_init(t_game *g, t_textures *paths);
 #endif

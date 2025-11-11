@@ -6,7 +6,7 @@
 /*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:39:30 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/06 11:40:20 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/11/11 09:46:20 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	map_content(char **map, int line)
 	{
 		j = 0;
 		if (map[i][0] == '\n' || map[i][0] == '\0')
-    		return (0);
+			return (0);
 		while (map[i][j] != '\0' && map[i][j] != '\n')
 		{
 			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' '
@@ -80,11 +80,13 @@ int	space_check(char **map, int line)
 		{
 			if (map[i][j] == ' ')
 			{
-				if (i > 0 && map[i - 1][j] != '1' && map[i - 1][j] != ' ' && map[i - 1][j] != '\0')
+				if (i > 0 && map[i - 1][j] != '1' && map[i - 1][j] != ' '
+					&& map[i - 1][j] != '\0')
 					return (0);
 				if (j > 0 && map[i][j - 1] != '1' && map[i][j - 1] != ' ')
 					return (0);
-				if (map[i][j + 1] != '\0' && map[i][j + 1] != '1' && map[i][j + 1] != ' ')
+				if (map[i][j + 1] != '\0' && map[i][j + 1] != '1'
+					&& map[i][j + 1] != ' ')
 					return (0);
 			}
 			j++;
@@ -108,13 +110,12 @@ int	surrounded_bywalls(char **map, int line)
 			if (map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S'
 				|| map[i][j] == 'E' || map[i][j] == 'W')
 			{
-				if ((i > 0 &&  map[i - 1][j] == ' '))
+				if ((i > 0 && map[i - 1][j] == ' ')
+					|| (i == line - 1 || map[i + 1][j] == ' '
+					|| map[i + 1][j] == '\0'))
 					return (0);
-				if (i == line - 1 || map[i + 1][j] == ' ' || map[i + 1][j] == '\0')
-					return (0);
-				if (j == 0 || map[i][j - 1] == ' ')
-					return (0);
-				if (map[i][j + 1] == ' ' || map[i][j + 1] == '\0')
+				if ((j == 0 || map[i][j - 1] == ' ')
+					|| (map[i][j + 1] == ' ' || map[i][j + 1] == '\0'))
 					return (0);
 			}
 			j++;

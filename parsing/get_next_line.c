@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:23:11 by yazlaigi          #+#    #+#             */
-/*   Updated: 2025/10/12 12:05:38 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/10 09:27:39 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ char	*before_newline(char *str)
 		n_str[i] = str[i];
 		i++;
 	}
-	// if (str[i] == '\n')
-	// 	n_str[i++] = '\n';
 	n_str[i] = '\0';
 	return (n_str);
 }

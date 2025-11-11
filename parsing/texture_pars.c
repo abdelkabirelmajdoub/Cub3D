@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_pars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 11:56:16 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/06 11:38:30 by yasserlotfi      ###   ########.fr       */
+/*   Updated: 2025/11/11 11:26:08 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ char	*trim_newline(char *str)
 	new_str = malloc(len + 1);
 	if (!new_str)
 		return (NULL);
-	strcpy(new_str, str);
+	ft_strcpy(new_str, str);
 	if (len > 0 && new_str[len - 1] == '\n')
 		new_str[len - 1] = '\0';
 	return (new_str);
 }
-void	get_paths_helper (t_textures *paths, char *value, int j)
+
+void	get_paths_helper(t_textures *paths, char *value, int j)
 {
 	int	i;
-	
+
 	i = -1;
-	if (value[j] == 'N' || value[j] == 'S' || value[j] == 'W' 
+	if (value[j] == 'N' || value[j] == 'S' || value[j] == 'W'
 		|| value[j] == 'E')
 		i = 2;
 	else if (value[j] == 'F' || value[j] == 'C')
@@ -55,7 +56,6 @@ void	get_paths_helper (t_textures *paths, char *value, int j)
 		paths->floor_color = trim_newline(&value[i]);
 	else if (value[j] == 'C')
 		paths->ceiling_color = trim_newline(&value[i]);
-		free (value);
 }
 
 int	get_paths(t_textures *paths, int fd, int line)
@@ -73,12 +73,13 @@ int	get_paths(t_textures *paths, int fd, int line)
 		value = get_next_line(fd);
 		while (value[j] == 32 || (value[j] >= 9 && value[j] <= 13))
 			j++;
-		if (value[j] == 'N' || value[j] == 'S' || value[j] == 'W' 
+		if (value[j] == 'N' || value[j] == 'S' || value[j] == 'W'
 			|| value[j] == 'E' || value[j] == 'F' || value[j] == 'C')
-			{
-				get_paths_helper(paths, value, j);
-				x++;
-			}
+		{
+			get_paths_helper(paths, value, j);
+			x++;
+		}
+		free (value);
 		i++;
 	}
 	if (x != 6)
@@ -141,36 +142,4 @@ int	ft_atoi(const char *str)
 	if (str[i] != '\0')
 		return (-1);
 	return (r * s);
-}
-
-
-int	validate_color(char *str, int *color)
-{
-	int			r;
-	int			g;
-	int			b;
-	char		**numbers;
-	static int	i;
-
-	numbers = ft_split(str, ',');
-	while (numbers[i])
-		i++;
-	r = ft_atoi(numbers[0]);
-	g = ft_atoi(numbers[1]);
-	b = ft_atoi(numbers[2]);
-	*color = (r  << 16) | (g << 8) | b | 0xFF;
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255 || i != 3)
-	{
-		free (numbers[0]);
-		free (numbers[1]);
-		free (numbers[2]);
-		free (numbers);
-		return (0);
-	}
-	free (numbers[0]);
-	free (numbers[1]);
-	free (numbers[2]);
-	free (numbers);
-
-	return (1);
 }
