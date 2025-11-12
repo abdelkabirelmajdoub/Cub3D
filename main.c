@@ -6,13 +6,13 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/11 12:18:50 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:37:37 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	map_name_check (char *map_name)
+int	map_name_check(char *map_name)
 {
 	if (ft_strlen(map_name) <= 4
 		|| map_name[ft_strlen(map_name) - 1] != 'b'
@@ -24,7 +24,8 @@ int	map_name_check (char *map_name)
 	return (1);
 }
 
-char	**main_helper(char *map_name, t_player *player_pos, t_textures *paths, t_game *game)
+char	**main_helper(char *map_name, t_player *player_pos, 
+		t_textures *paths, t_game *game)
 {
 	char	**map;
 	int		fd;
@@ -37,7 +38,7 @@ char	**main_helper(char *map_name, t_player *player_pos, t_textures *paths, t_ga
 	fd = open(map_name, O_RDONLY);
 	map_s = map_start(map_name);
 	map = convert_map(map_name, map_s);
-	if (!map || !*map)
+	if (!map)
 		return (NULL);
 	x = get_paths(paths, fd, map_s);
 	map_lines = 0;
@@ -54,36 +55,33 @@ void	tree_d_render(t_game *g)
 {
 	float	start_angle;
 	int		i;
+	float	fov;
 
 	i = 0;
-	start_angle = g->player.angle - FOV / 2;
-	while (i < WIDTH)
+	fov = M_PI / 3;
+	start_angle = g->player.angle - fov / 2;
+	while (i < g->width)
 	{
-		start_angle += FOV / WIDTH;
+		start_angle += fov / g->width;
 		draw_line(g, start_angle, i);
 		i++;
 	}
 }
 
-void	init_paths(t_textures *path, t_game *g)
+void	resize_func(int32_t width, int32_t height, void *param)
 {
-	path->ceiling_color = NULL;
-	path->floor_color = NULL;
-	path->ea_path = NULL;
-	path->we_path = NULL;
-	path->so_path = NULL;
-	path->no_path = NULL;
-	g->ea = NULL;
-	g->we = NULL;
-	g->so = NULL;
-	g->no = NULL;
+	t_game	*g;
+
+	g = (t_game *)param;
+	g->width = width;
+	g->height = height;
 }
-void ll(){system("leaks -q cub3D");}
+
 int	main(int ac, char **av)
 {
 	t_game		game;
-	t_textures  *paths;
-atexit(ll);
+	t_textures	*paths;
+
 	if (ac != 2)
 	{
 		perror("Error\nWrong Number of args!");
@@ -99,6 +97,7 @@ atexit(ll);
 	texture_init(&game, paths);
 	init_game(&game);
 	init_player(&game);
+	mlx_resize_hook(game.mlx, resize_func, &game);
 	mlx_loop_hook(game.mlx, &game_loop, &game);
 	mlx_loop(game.mlx);
 	mlx_terminate(game.mlx);

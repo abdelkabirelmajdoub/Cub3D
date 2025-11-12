@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 10:30:02 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/10 14:13:58 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/12 11:21:33 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ceill_draw(t_game *g, int start_draw, int i)
 
 void	floor_draw(t_game *g, int end_draw, int i)
 {
-	while (end_draw < HEIGHT)
+	while (end_draw < g->height)
 	{
 		mlx_put_pixel(g->img, i, end_draw, g->floor_color);
 		end_draw++;

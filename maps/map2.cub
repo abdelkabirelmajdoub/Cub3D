@@ -1,10 +1,11 @@
-NO ./textures/no.png
-SO ./textures/ea.png
-WE ./textures/so.png
-EA ./textures/we.png
+NO ./textures/no.png   
+SO ./textures/ea.jpng     
+WE ./textures/so.png        
+EA  ./textures/we.png    
+  
+F 147,156,255   
+C 42,178,209   
 
-F 250,200,50
-C 245,245,245
 
 11111111111111111
 10000000000000001

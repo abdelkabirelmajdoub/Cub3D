@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:40:59 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/09 10:44:10 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:34:08 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,42 +75,41 @@ void	x_tex(t_dda *p)
 		p->tex_x = p->tex->width - 1;
 }
 
-void	start_end(t_dda *p, int *line_height, int *start_draw, int *end_draw)
+void	start_end(t_dda *p, t_game *g)
 {
-	*line_height = (int)(HEIGHT / p->perp_wall);
-	*start_draw = -*line_height / 2 + HEIGHT / 2;
-	if (*start_draw < 0)
-		*start_draw = 0;
-	*end_draw = *line_height / 2 + HEIGHT / 2;
-	if (*end_draw > HEIGHT)
-		*end_draw = HEIGHT;
+	p->line_height = (int)(g->height / p->perp_wall);
+	if (p->line_height < 1)
+		p->line_height = 1;
+	p->start_draw = -p->line_height / 2 + g->height / 2;
+	if (p->start_draw < 0)
+		p->start_draw = 0;
+	p->end_draw = p->line_height / 2 + g->height / 2;
+	if (p->end_draw > g->height)
+		p->end_draw = g->height;
 }
 
 void	draw_line(t_game *g, float ray_angle, int i)
 {
 	t_dda	p;
-	int		line_height;
-	int		start_draw;
-	int		end_draw;
 
 	set_calcul(&p, g, ray_angle);
 	sides_init(&p);
 	dda_loop(&p, g, ray_angle);
 	x_tex(&p);
-	start_end(&p, &line_height, &start_draw, &end_draw);
-	ceill_draw(g, start_draw, i);
-	p.step = (float)p.tex->height / (float)line_height;
-	p.tex_pos_y = (start_draw - HEIGHT / 2 + line_height / 2) * p.step;
-	while (start_draw < end_draw)
+	start_end(&p, g);
+	ceill_draw(g, p.start_draw, i);
+	p.step = (float)p.tex->height / (float)p.line_height;
+	p.tex_pos_y = (p.start_draw - g->height / 2 + p.line_height / 2) * p.step;
+	while (p.start_draw < p.end_draw)
 	{
 		if (p.tex_pos_y < 0)
 			p.tex_pos_y = 0;
 		if (p.tex_pos_y >= (int)p.tex->height)
 			p.tex_pos_y = p.tex->height - 1;
 		p.color = get_tex_color(p.tex, p.tex_x, p.tex_pos_y);
-		mlx_put_pixel(g->img, i, start_draw, p.color);
+		mlx_put_pixel(g->img, i, p.start_draw, p.color);
 		p.tex_pos_y += p.step;
-		start_draw++;
+		p.start_draw++;
 	}
-	floor_draw(g, end_draw, i);
+	floor_draw(g, p.end_draw, i);
 }

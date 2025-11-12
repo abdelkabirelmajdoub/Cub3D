@@ -6,7 +6,7 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 10:27:04 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/09 10:46:52 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:30:10 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	game_loop(void *param)
 	float	dy;
 
 	g = (t_game *)param;
+	if (g->width < 5 || g->height < 5)
+		return ;
 	dx = g->player.x;
 	dy = g->player.y;
 	suspand_cursor(g);
@@ -98,9 +100,14 @@ void	game_loop(void *param)
 	check_move_rotate(g, dx, dy);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(g->mlx);
-	mlx_delete_image(g->mlx, g->img);
-	g->img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(g->mlx, g->img, 0, 0);
+	if (g->img)
+		mlx_delete_image(g->mlx, g->img);
+	g->img = mlx_new_image(g->mlx, g->width, g->height);
+	if (!g->img)
+		return ;
+	if (g->img)
+		mlx_image_to_window(g->mlx, g->img, 0, 0);
 	tree_d_render(g);
-	draw_map(g);
+	if (g->width >= 400 && g->height >= 230)
+		draw_map(g);
 }

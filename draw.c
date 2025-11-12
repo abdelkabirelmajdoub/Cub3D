@@ -6,30 +6,32 @@
 /*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 11:07:46 by ael-majd          #+#    #+#             */
-/*   Updated: 2025/11/09 11:01:31 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:13:44 by ael-majd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_square(mlx_image_t *img, int start_x, int start_y, int color)
+void	draw_square(t_game *g, int start_x, int start_y, int color)
 {
 	int	x;
 	int	y;
 
+	if (!g->img)
+		return ;
 	y = 0;
 	while (y < TILE)
 	{
 		x = 0;
 		while (x < TILE)
 		{
-			if (start_x + x >= 0 && start_x + x < MINI_SIZE
-				&& start_y + y >= 0 && start_y + y < MINI_SIZE)
+			if (start_x + x >= 0 && start_x + x < (int)g->img->width
+				&& start_y + y >= 0 && start_y + y < (int)g->img->height)
 			{
 				if (x < 1 || y < 1)
-					mlx_put_pixel(img, start_x + x, start_y + y, 0xFFFFFFFF);
+					mlx_put_pixel(g->img, start_x + x, start_y + y, 0xFFFFFFFF);
 				else
-					mlx_put_pixel(img, start_x + x, start_y + y, color);
+					mlx_put_pixel(g->img, start_x + x, start_y + y, color);
 			}
 			x++;
 		}
@@ -102,11 +104,11 @@ void	draw_map(t_game *g)
 			m.draw_y = (y - m.p_map_y + m.visible) * TILE;
 			if (x < 0 || y < 0 || x >= ft_strlen(g->map[y])
 				|| y >= g->map_height)
-				draw_square(g->img, m.draw_x, m.draw_y, 0x0);
+				draw_square(g, m.draw_x, m.draw_y, 0x0);
 			else if (g->map[y][x] == '1')
-				draw_square(g->img, m.draw_x, m.draw_y, 0x0000FFFF);
+				draw_square(g, m.draw_x, m.draw_y, 0x0000FFFF);
 			else
-				draw_square(g->img, m.draw_x, m.draw_y, 0xCCCCCCFF);
+				draw_square(g, m.draw_x, m.draw_y, 0xCCCCCCFF);
 			x++;
 		}
 		y++;

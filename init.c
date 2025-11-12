@@ -32,10 +32,10 @@ void	set_sizeof_map(t_game *g)
 
 void	init_game(t_game *g)
 {
-	g->mlx = mlx_init(WIDTH, HEIGHT, "3D Game", true);
-	g->img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(g->mlx, g->img, 0, 0);
-	g->player.prev_mouse_x = WIDTH / 2;
+	g->width = WIDTH;
+	g->height = HEIGHT;
+	g->mlx = mlx_init(g->width, g->height, "3D Game", true);
+	g->player.prev_mouse_x = g->width / 2;
 	g->show_map = 0;
 	g->player.mouse_locked = false;
 	set_sizeof_map(g);
