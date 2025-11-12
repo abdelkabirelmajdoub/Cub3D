@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 09:24:03 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/11 12:25:53 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/11 12:36:18 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_strcpy(char *dest, char *src)
 	int	i;
 
 	i = 0;
-	while (src[i])
+	while (src[i] && src[i] != ' ')
 	{
 		dest[i] = src[i];
 		i++;

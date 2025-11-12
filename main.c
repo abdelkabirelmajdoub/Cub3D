@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/11 12:18:50 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/12 10:58:45 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ char	**main_helper(char *map_name, t_player *player_pos, t_textures *paths, t_ga
 	fd = open(map_name, O_RDONLY);
 	map_s = map_start(map_name);
 	map = convert_map(map_name, map_s);
-	if (!map || !*map)
+	if (!map)
 		return (NULL);
+	exit(1);
 	x = get_paths(paths, fd, map_s);
 	map_lines = 0;
 	while (map[map_lines])

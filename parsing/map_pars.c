@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_pars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasserlotfi <yasserlotfi@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:39:30 by yasserlotfi       #+#    #+#             */
-/*   Updated: 2025/11/11 12:07:55 by ael-majd         ###   ########.fr       */
+/*   Updated: 2025/11/12 11:02:06 by yasserlotfi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	space_check(char **map, int line)
 		{
 			if (map[i][j] == ' ')
 			{
-				if (i > 0 && map[i - 1][j] != '1' && map[i - 1][j] != ' '
-					&& map[i - 1][j] != '\0')
+				if (i > 0 && j < ft_strlen(map[i - 1]) && map[i - 1][j] != '1'
+					&& map[i - 1][j] != ' ' && map[i - 1][j] != '\0')
 					return (0);
 				if (j > 0 && map[i][j - 1] != '1' && map[i][j - 1] != ' ')
 					return (0);
