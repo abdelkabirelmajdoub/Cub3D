@@ -1,0 +1,172 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/22 09:23:51 by yazlaigi          #+#    #+#             */
+/*   Updated: 2025/11/13 10:20:07 by ael-majd         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <math.h>
+# include <MLX42/MLX42.h>
+
+/* **************** SETTINGS *****************/
+
+# ifndef GET_NEXT_LINE_H
+#  define GET_NEXT_LINE_H
+
+#  ifndef BUFFER_SIZE
+#   define BUFFER_SIZE 45
+#  endif
+# endif
+
+# define TILE 15
+# define SIZE_P 5
+# define SPEED 1
+# define MARGIN 1
+# define WIDTH 1920
+# define HEIGHT 1080
+# define ROT_SPEED 0.05
+# define MINI_SIZE 150
+# define H_MAP 320
+# define W_MAP 150
+// ---- raycasting __///
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	angle;
+	float	speed;
+	float	prev_mouse_x;
+	int32_t	mouse_x;
+	int32_t	mouse_y;
+	bool	mouse_locked;
+}	t_player;
+
+typedef struct s_textures
+{
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	char	*floor_color;
+	char	*ceiling_color;
+}	t_textures;
+
+typedef struct s_game
+{
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_player		player;
+	char			**map;
+	int				show_map;
+	int				map_width;
+	int				map_height;
+	t_textures		*text_paths;
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*ea;
+	mlx_texture_t	*we;
+	int				floor_color;
+	int				ceil_color;
+	int				width;
+	int				height;
+}					t_game;
+
+typedef struct s_dda
+{
+	int				map_x;
+	int				map_y;
+	int				step_x;
+	int				step_y;
+	int				hit;
+	int				side;
+	int				line_height;
+	int				start_draw;
+	int				end_draw;
+	float			x_tile;
+	float			y_tile;
+	float			ray_x;
+	float			ray_y;
+	float			side_x;
+	float			side_y;
+	float			delta_x;
+	float			delta_y;
+	float			perp_wall;
+	float			dist;
+	float			wall_x;
+	int				tex_x;
+	float			step;
+	float			tex_pos_y;
+	uint32_t		color;
+	mlx_texture_t	*tex;
+}					t_dda;
+
+typedef struct s_minimap
+{
+	int	visible;
+	int	p_map_x;
+	int	p_map_y;
+	int	draw_x;
+	int	draw_y;
+}		t_minimap;
+
+/* ****************parsing*****************/
+uint32_t	get_tex_color(mlx_texture_t *tex, int x, int y);
+/* ****************get_next_line*****************/
+char		*get_next_line(int fd);
+char		*ft_strjoin(char *s1, char *s2);
+char		*ft_strdup(char *str);
+int			ft_strchr(char *str);
+int			ft_strlen(char *str);
+char		*after_newline(char *str);
+char		*before_newline(char *str);
+/* ****************get_next_line*****************/
+char		**convert_map(char *map_name, int start);
+int			map_start(char *map_name);
+int			count_chars(char *map_name);
+int			count_line(char *map_name);
+int			surrounded_bywalls(char **map, int line);
+int			player_check(char **map, int line);
+int			map_content(char **map, int line);
+int			space_check(char **map, int line);
+void		get_playerpos(char **map, int line, t_player	*player_pos);
+int			map_pars(char **map, int map_lines, t_player *player_pos);
+int			get_paths(t_textures *paths, int fd, int line);
+char		**main_helper(char *map_name, t_player *player_pos, 
+				t_textures *paths, t_game *game);
+char		**ft_split(char const *s, char c);
+int			validate_color(char *str, int *color);
+int			path_check(t_textures *paths, t_game *game);
+int			ft_atoi(const char *str);
+char		*ft_strcpy(char *dest, char *src);
+/* ****************parsing*****************/
+
+// ----- raycating ----//
+void		init_game(t_game *g);
+void		init_player(t_game *g);
+void		init_paths(t_textures *path, t_game *g);
+void		free_up(char **s);
+void		free_path(t_textures *path, t_game *g);
+void		dda_loop(t_dda *p, t_game *g, float ray_angle);
+// --- drawing --//
+void		draw_square(t_game *g, int start_x, int start_y, int color);
+void		draw_player(t_game *g, int color);
+void		ceill_draw(t_game *g, int start_draw, int i);
+void		floor_draw(t_game *g, int end_draw, int i);
+void		draw_map(t_game *g);
+bool		can_move(t_game *g, float new_x, float new_y);
+void		game_loop(void *param);
+void		draw_line(t_game *g, float ray_angle, int i);
+void		tree_d_render(t_game *g);
+void		texture_init(t_game *g, t_textures *paths);
+#endif

@@ -1,0 +1,106 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-majd <ael-majd@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/13 09:30:25 by yasserlotfi       #+#    #+#             */
+/*   Updated: 2025/11/13 10:12:05 by ael-majd         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d_bonus.h"
+
+int	map_name_check(char *map_name)
+{
+	if (ft_strlen(map_name) <= 4
+		|| map_name[ft_strlen(map_name) - 1] != 'b'
+		|| map_name[ft_strlen(map_name) - 2] != 'u'
+		|| map_name[ft_strlen(map_name) - 3] != 'c'
+		|| map_name[ft_strlen(map_name) - 4] != '.'
+		|| map_name[ft_strlen(map_name) - 5] == '/')
+		return (0);
+	return (1);
+}
+
+char	**main_helper(char *map_name, t_player *player_pos, 
+		t_textures *paths, t_game *game)
+{
+	char	**map;
+	int		fd;
+	int		map_lines;
+	int		map_s;
+	int		x; 
+
+	if (map_name_check(map_name) == 0)
+		return (NULL);
+	fd = open(map_name, O_RDONLY);
+	map_s = map_start(map_name);
+	map = convert_map(map_name, map_s);
+	if (!map)
+		return (NULL);
+	x = get_paths(paths, fd, map_s);
+	map_lines = 0;
+	while (map[map_lines])
+		map_lines++;
+	if (map_pars(map, map_lines, player_pos) == 0
+		|| path_check(paths, game) == 0
+		|| x == 0)
+		return (free_up(map), NULL);
+	return (map);
+}
+
+void	tree_d_render(t_game *g)
+{
+	float	start_angle;
+	int		i;
+	float	fov;
+
+	i = 0;
+	fov = M_PI / 3;
+	start_angle = g->player.angle - fov / 2;
+	while (i < g->width)
+	{
+		start_angle += fov / g->width;
+		draw_line(g, start_angle, i);
+		i++;
+	}
+}
+
+void	resize_func(int32_t width, int32_t height, void *param)
+{
+	t_game	*g;
+
+	g = (t_game *)param;
+	g->width = width;
+	g->height = height;
+}
+
+int	main(int ac, char **av)
+{
+	t_game		game;
+	t_textures	*paths;
+
+	if (ac != 2)
+	{
+		perror("Error\nWrong Number of args!");
+		return (1);
+	}
+	paths = malloc(sizeof(t_textures));
+	if (!paths)
+		return (0);
+	init_paths(paths, &game);
+	game.map = main_helper(av[1], &game.player, paths, &game);
+	if (!game.map)
+		return (free_path(paths, &game), perror("Error\nFix your map/paths"), 1);
+	texture_init(&game, paths);
+	init_game(&game);
+	init_player(&game);
+	mlx_resize_hook(game.mlx, resize_func, &game);
+	mlx_loop_hook(game.mlx, &game_loop, &game);
+	mlx_loop(game.mlx);
+	mlx_terminate(game.mlx);
+	free_up(game.map);
+	free_path(paths, &game);
+}

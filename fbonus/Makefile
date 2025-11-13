@@ -1,12 +1,14 @@
-NAME	= cub3D
+NAME	= ../cub3D
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
-SRC		=	 main.c dda.c init.c collision.c draw.c game_loop.c textures.c d_utils.c \
-			parsing/extra_func.c \
- 			parsing/get_next_line_utils.c parsing/get_next_line.c parsing/map_parsing.c parsing/map_pars.c parsing/texture_pars.c\
-			parsing/ft_split.c 
+SRC		= 	main_bonus.c dda_bonus.c init_bonus.c collision_bonus.c draw_bonus.c game_loop_bonus.c textures_bonus.c d_utils_bonus.c \
+			parsing/extra_func_bonus.c \
+ 			parsing/get_next_line_utils_bonus.c parsing/get_next_line_bonus.c parsing/map_parsing_bonus.c parsing/map_pars_bonus.c parsing/texture_pars_bonus.c\
+			parsing/ft_split_bonus.c
+
+
 
 OBJS	= $(SRC:.c=.o)
 
@@ -28,19 +30,10 @@ $(NAME): $(OBJS)
 	@	echo "\033[1;32m  🛤  Building cub3D ... 🔮     \033[0m"
 	@	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FLAGMLX) -o $(NAME)
 
-%.o: %.c cub3d.h
+%.o: %.c cub3d_bonus.h
 	@	$(CC) $(CFLAGS) -c $< -I$(MLX42_INC) -o $@
 
 clean:
 	@	rm -f $(OBJS)
-	@	make clean -C fbonus
-	
 
 
-fclean: clean
-	@	rm -f $(NAME)
-
-re: fclean all
-
-bonus:
-	@ make all -C fbonus
